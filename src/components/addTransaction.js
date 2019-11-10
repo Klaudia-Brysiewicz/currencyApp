@@ -11,11 +11,13 @@ import { getValueAfterExchange } from '../utils/helpers';
 const AddTransaction = () => {
     const [description, setDescription] = useState('');
     const [transactionValue, setTransactionValue] = useState('');
+    const [message, setMessage] = useState('');
     const exchangeRate = useSelector(state => state.exchange.exchangeRate);
     const dispatch = useDispatch();
     return (
         <Card style={styles.container}>
-            <CardContent>
+            <CardContent style={styles.content}>
+                <Typography>Dodaj transakcję :</Typography>
                 <Typography>Opis :</Typography>
                 <Input
                     value={description}
@@ -28,9 +30,15 @@ const AddTransaction = () => {
                     onChange={event => setTransactionValue(event.target.value)}
                     type="number"
                 />
+                { message ? (
+                    <Typography style={styles.error}>{message}</Typography>
+                ) : null}
                 <Button
                     color="primary"
                     onClick={() => {
+                        if(!description || !transactionValue) {
+                            return setMessage('Proszę uzupełnić wszystkie pola');
+                        }
                         dispatch({
                             type: ADD_TRANSACTION,
                             data: {
@@ -54,6 +62,13 @@ const AddTransaction = () => {
 const styles = {
     container: {
         marginBottom: '40px',
+    },
+    content: {
+        display: 'flex',
+        flexDirection: 'column',
+    },
+    error: {
+        color: 'red',
     },
 };
 
