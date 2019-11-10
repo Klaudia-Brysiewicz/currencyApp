@@ -16,13 +16,11 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const TransactionList = () => {
+const TransactionList = ({ transactions }) => {
     const classes = useStyles();
-    const transactions = useSelector(state => state.exchange.transactions);
     const dispatch = useDispatch();
     const summary = useSelector(state => state.exchange.summary);
     const summaryAfterExchange = useSelector(state => state.exchange.summaryAfterExchange);
-    if (!transactions.length) return null;
     return (
         <Card>
             <CardContent>

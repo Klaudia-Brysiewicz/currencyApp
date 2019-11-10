@@ -1,4 +1,4 @@
-export const getValueAfterExchange = (exchangeRate, transactionValue) => {
+const getValueAfterExchange = (exchangeRate, transactionValue) => {
     const value = exchangeRate * transactionValue;
     const pointIndex = String(value).indexOf('.');
     const isFloatNumber = pointIndex !== -1 ? true : false;
@@ -8,3 +8,13 @@ export const getValueAfterExchange = (exchangeRate, transactionValue) => {
     }
     return value;
 };
+
+const getGreatestValueTransaction = (values) => {
+    const allValues = values.sort((a, b) => b.transactionValue - a.transactionValue);
+    return allValues[0];
+};
+
+export {
+    getValueAfterExchange,
+    getGreatestValueTransaction,
+}
