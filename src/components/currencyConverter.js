@@ -3,8 +3,9 @@ import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Input from '@material-ui/core/Input';
+import { StylesContext } from '@material-ui/styles/StylesProvider';
 
-const CurrencyConverter = () => {
+const CurrencyConverter = ({ style }) => {
     const [value, setVaule] = useState(1);
     const [euroValue, setEuroValue] = useState('');
     const [exchangeRate, setExchangeRate] = useState('');
@@ -19,14 +20,14 @@ const CurrencyConverter = () => {
         setEuroValue(exchangeRate * value);
     };
     return (
-        <Card>
+        <Card style={styles.container} >
             <CardContent>
-                <Typography>Przelicznik:</Typography>
+                <Typography>Kurs € :</Typography>
                 <Input value={exchangeRate} onChange={(event) => calculateExchangeRate(event)} type="number" />
                 { exchangeRate
                 ? (
                     <Fragment>
-                        <Typography>Kwota:</Typography>
+                        <Typography>Kwota w PLN:</Typography>
                         <Input value={value} onChange={(event) => calculateValue(event)} type="number" />
                     </Fragment>
                 ) : null}
@@ -37,5 +38,11 @@ const CurrencyConverter = () => {
         </Card>
     );
 };
+
+const styles = {
+    container: {
+        marginBottom: '40px',
+    },
+}
 
 export default CurrencyConverter;
