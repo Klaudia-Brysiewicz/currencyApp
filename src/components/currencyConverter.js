@@ -1,14 +1,16 @@
 import React, { useState, Fragment } from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Input from '@material-ui/core/Input';
-import { StylesContext } from '@material-ui/styles/StylesProvider';
 
-const CurrencyConverter = ({ style }) => {
+const CurrencyConverter = () => {
     const [value, setVaule] = useState(1);
     const [euroValue, setEuroValue] = useState('');
-    const [exchangeRate, setExchangeRate] = useState('');
+    const exchangeRate = useSelector(state => state.exchange.exchangeRate);
+    const dispatch = useDispatch()
     const calculateValue = (event) => {
         const value = event.target.value;
         setVaule(value);
@@ -16,11 +18,11 @@ const CurrencyConverter = ({ style }) => {
     };
     const calculateExchangeRate = (event) => {
         const exchangeRate = event.target.value;
-        setExchangeRate(exchangeRate)
+        dispatch({ type: 'CHANGE_RATE', data: exchangeRate })
         setEuroValue(exchangeRate * value);
     };
     return (
-        <Card style={styles.container} >
+        <Card style={styles.container}>
             <CardContent>
                 <Typography>Kurs € :</Typography>
                 <Input value={exchangeRate} onChange={(event) => calculateExchangeRate(event)} type="number" />
@@ -31,7 +33,7 @@ const CurrencyConverter = ({ style }) => {
                         <Input value={value} onChange={(event) => calculateValue(event)} type="number" />
                     </Fragment>
                 ) : null}
-                {(value && exchangeRate)
+                {(value && exchangeRate && euroValue)
                 ? (<Typography>{value} PLN = {euroValue} €</Typography>)
                 : null}
             </CardContent>

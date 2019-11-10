@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import CurrencyConverter from './currencyConverter';
 import AddTransaction from './addTransaction';
 
-const App = () => {
+const MainPage = () => {
     const addTransaction = (description, transactionValue) => {
         console.log('add', description, transactionValue);
     }
@@ -31,4 +31,4 @@ const styles = {
         backgroundColor: '#45434a',
     },
 }
-export default App;
+export default MainPage;
