@@ -1,5 +1,5 @@
 import { CHANGE_RATE, ADD_TRANSACTION, REMOVE_TRANSACTION } from '../actions/types';
-import { getGreatestValueTransaction } from '../utils/helpers';
+import { getGreatestValueTransaction, getSummary } from '../utils/helpers';
 
 const initialState = {
     exchangeRate: 4.2,
@@ -14,39 +14,27 @@ export const exchange = (state = initialState, action = {}) => {
             return { ...state, exchangeRate: action.data };
         case ADD_TRANSACTION:
             const updatedTransactions = [...state.transactions, action.data];
-            const updatedSummary = updatedTransactions.reduce((accu, { transactionValue }) => {
-                return accu + Number(transactionValue);
-            }, 0);
-            const updatedSummaryAfterExchange = updatedTransactions.reduce(
-                (accu, { valueAfterExchange }) => {
-                    return accu + Number(valueAfterExchange);
-                },
-                0,
-            );
+            const updatedSummary = getSummary(updatedTransactions,'transactionValue');
+            const updatedSummaryAfterExchange = getSummary(updatedTransactions,'valueAfterExchange');
+            const updatedGreatestValue = getGreatestValueTransaction(updatedTransactions);
             return {
                 ...state,
                 summary: updatedSummary,
                 summaryAfterExchange: updatedSummaryAfterExchange,
                 transactions: updatedTransactions,
-                greatestTransaction: getGreatestValueTransaction(updatedTransactions),
+                greatestTransaction: updatedGreatestValue,
             };
         case REMOVE_TRANSACTION:
             const filtredTransactions = state.transactions.filter(el => el.id !== action.id);
-            const newSummary = filtredTransactions.reduce((accu, { transactionValue }) => {
-                return accu + Number(transactionValue);
-            }, 0);
-            const newSummaryAfterExchange = filtredTransactions.reduce(
-                (accu, { valueAfterExchange }) => {
-                    return accu + Number(valueAfterExchange);
-                },
-                0,
-            );
+            const newSummary = getSummary(filtredTransactions,'transactionValue');
+            const newSummaryAfterExchange = getSummary(filtredTransactions,'valueAfterExchange');
+            const newGreatestValue = getGreatestValueTransaction(filtredTransactions);
             return {
                 ...state,
                 transactions: filtredTransactions,
                 summary: newSummary,
                 summaryAfterExchange: newSummaryAfterExchange,
-                greatestTransaction: getGreatestValueTransaction(updatedTransactions),
+                greatestTransaction: newGreatestValue,
             };
         default:
             return state;

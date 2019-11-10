@@ -14,7 +14,15 @@ const getGreatestValueTransaction = (values) => {
     return allValues[0];
 };
 
+const getSummary = (transactions, key) => (transactions.reduce(
+    (accu, el) => {
+        return accu + Number(el[key]);
+    },
+    0,
+));
+
 export {
     getValueAfterExchange,
     getGreatestValueTransaction,
+    getSummary,
 }
