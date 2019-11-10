@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 const MainPage = () => {
     const transactions = useSelector(state => state.exchange.transactions);
     return (
-        <Grid container style={styles.container} className="App">
+        <Grid container style={styles.container} direction="column" justify="flex-start">
             <Grid item xs={12}>
                 <Typography variant="h4" style={styles.title}>Przelicznik walutowy</Typography>
             </Grid>
@@ -41,6 +41,7 @@ const styles = {
     container: {
         padding: '40px',
         backgroundColor: '#45434a',
+        minHeight: '100vh',
     },
 }
 export default MainPage;

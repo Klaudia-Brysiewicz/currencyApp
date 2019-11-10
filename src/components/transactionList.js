@@ -22,7 +22,7 @@ const TransactionList = ({ transactions }) => {
     const summary = useSelector(state => state.exchange.summary);
     const summaryAfterExchange = useSelector(state => state.exchange.summaryAfterExchange);
     return (
-        <Card>
+        <Card style={styles.container}>
             <CardContent>
                 {transactions.map(({ description, transactionValue, id, valueAfterExchange }, index) => (
                     <Grid
@@ -56,6 +56,9 @@ const TransactionList = ({ transactions }) => {
 };
 
 const styles = {
+    container: {
+        marginBottom: '40px',
+    },
     item: {
         padding: 10,
         margin: '10px 0',

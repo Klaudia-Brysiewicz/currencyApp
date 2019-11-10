@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const MaxValueCard = () => {
     const greatestTransaction = useSelector(state => state.exchange.greatestTransaction);
     return (
-        <Card>
+        <Card style={styles.container}>
             <CardContent>
                 <Typography>
                     Największa transakcja :
@@ -26,5 +26,10 @@ const MaxValueCard = () => {
     )
 }
 
+const styles = {
+    container: {
+        marginBottom: '40px',
+    },
+};
 
 export default MaxValueCard;
