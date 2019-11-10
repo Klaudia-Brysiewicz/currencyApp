@@ -4,9 +4,12 @@ const getValueAfterExchange = (exchangeRate, transactionValue) => {
     const isFloatNumber = pointIndex !== -1 ? true : false;
     if (isFloatNumber) {
         const updatedValue = String(value).slice(0,pointIndex + 3);
+        if (updatedValue.slice(pointIndex).length === 2) {
+            return `${updatedValue}0`;
+        }
         return updatedValue;
     }
-    return value;
+    return `${value}.00`;
 };
 
 const getGreatestValueTransaction = (values) => {

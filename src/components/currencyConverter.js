@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Input from '@material-ui/core/Input';
 import { CHANGE_RATE } from '../actions/types';
+import { getValueAfterExchange } from '../utils/helpers';
 
 const CurrencyConverter = () => {
     const [value, setVaule] = useState(1);
@@ -14,12 +15,16 @@ const CurrencyConverter = () => {
     const calculateValue = (event) => {
         const value = event.target.value;
         setVaule(value);
-        setEuroValue(value * exchangeRate);
+        const valueAfterExchange = getValueAfterExchange(exchangeRate, value);
+        console.log(valueAfterExchange);
+        setEuroValue(valueAfterExchange);
     };
     const calculateExchangeRate = (event) => {
         const exchangeRate = event.target.value;
         dispatch({ type: CHANGE_RATE, data: exchangeRate });
-        setEuroValue(exchangeRate * value);
+        const valueAfterExchange = getValueAfterExchange(exchangeRate, value);
+        console.log(valueAfterExchange);
+        setEuroValue(valueAfterExchange);
     };
     return (
         <Card style={styles.container}>
