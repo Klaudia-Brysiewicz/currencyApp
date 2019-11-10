@@ -6,7 +6,6 @@ import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
-import { getValueInEuro } from '../utils/helpers';
 import { useDispatch } from 'react-redux';
 import { REMOVE_TRANSACTION } from '../actions/types';
 
@@ -20,13 +19,14 @@ const useStyles = makeStyles(theme => ({
 const TransactionList = () => {
     const classes = useStyles();
     const transactions = useSelector(state => state.exchange.transactions);
-    const exchangeRate = useSelector(state => state.exchange.exchangeRate);
     const dispatch = useDispatch();
+    const summary = useSelector(state => state.exchange.summary);
+    const summaryAfterExchange = useSelector(state => state.exchange.summaryAfterExchange);
     if (!transactions.length) return null;
     return (
         <Card>
             <CardContent>
-                {transactions.map(({ description, transactionValue, id }, index) => (
+                {transactions.map(({ description, transactionValue, id, valueAfterExchange }, index) => (
                     <Grid
                         container
                         key={index}
@@ -37,7 +37,7 @@ const TransactionList = () => {
                     >
                         <Typography>
                             {description}, €: {transactionValue}, PLN:{' '}
-                            {getValueInEuro(exchangeRate, transactionValue)}
+                            {valueAfterExchange}
                         </Typography>
                         <Fab
                             color="primary"
@@ -48,6 +48,10 @@ const TransactionList = () => {
                         </Fab>
                     </Grid>
                 ))}
+            </CardContent>
+            <CardContent>
+                <Typography> Wszystkie transakcje: {summary}</Typography>
+                <Typography>Wszystkie transakcje po zmianie waluty: {summaryAfterExchange}</Typography>
             </CardContent>
         </Card>
     );

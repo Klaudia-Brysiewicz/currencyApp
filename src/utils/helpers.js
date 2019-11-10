@@ -1,4 +1,4 @@
-export const getValueInEuro = (exchangeRate, transactionValue) => {
+export const getValueAfterExchange = (exchangeRate, transactionValue) => {
     const value = exchangeRate * transactionValue;
     const pointIndex = String(value).indexOf('.');
     const isFloatNumber = pointIndex !== -1 ? true : false;

@@ -5,11 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 import { ADD_TRANSACTION } from '../actions/types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { getValueAfterExchange } from '../utils/helpers';
 
 const AddTransaction = () => {
     const [description, setDescription] = useState('');
     const [transactionValue, setTransactionValue] = useState('');
+    const exchangeRate = useSelector(state => state.exchange.exchangeRate);
     const dispatch = useDispatch();
     return (
         <Card style={styles.container}>
@@ -29,7 +31,15 @@ const AddTransaction = () => {
                 <Button
                     color="primary"
                     onClick={() => {
-                        dispatch({ type: ADD_TRANSACTION, data: { description, transactionValue, id: Date.now() } });
+                        dispatch({
+                            type: ADD_TRANSACTION,
+                            data: {
+                                description,
+                                transactionValue,
+                                id: Date.now(),
+                                valueAfterExchange: getValueAfterExchange(exchangeRate, transactionValue),
+                            },
+                        });
                         setDescription('');
                         setTransactionValue('');
                     }}
