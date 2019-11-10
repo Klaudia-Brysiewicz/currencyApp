@@ -29,7 +29,7 @@ const AddTransaction = () => {
                 <Button
                     color="primary"
                     onClick={() => {
-                        dispatch({ type: ADD_TRANSACTION, data: { description, transactionValue } });
+                        dispatch({ type: ADD_TRANSACTION, data: { description, transactionValue, id: Date.now() } });
                         setDescription('');
                         setTransactionValue('');
                     }}
