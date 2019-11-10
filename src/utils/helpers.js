@@ -24,8 +24,13 @@ const getSummary = (transactions, key) => (transactions.reduce(
     0,
 ));
 
+const changeCurrency = (transactions, exchangeRate, getValueAfterExchange) => (
+    transactions.map(el => ({ ...el, valueAfterExchange: getValueAfterExchange(exchangeRate, el.transactionValue)})
+));
+
 export {
     getValueAfterExchange,
     getGreatestValueTransaction,
     getSummary,
-}
+    changeCurrency,
+};

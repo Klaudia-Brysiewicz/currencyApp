@@ -16,14 +16,12 @@ const CurrencyConverter = () => {
         const value = event.target.value;
         setVaule(value);
         const valueAfterExchange = getValueAfterExchange(exchangeRate, value);
-        console.log(valueAfterExchange);
         setEuroValue(valueAfterExchange);
     };
     const calculateExchangeRate = (event) => {
         const exchangeRate = event.target.value;
         dispatch({ type: CHANGE_RATE, data: exchangeRate });
         const valueAfterExchange = getValueAfterExchange(exchangeRate, value);
-        console.log(valueAfterExchange);
         setEuroValue(valueAfterExchange);
     };
     return (
