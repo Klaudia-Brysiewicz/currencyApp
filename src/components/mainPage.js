@@ -3,11 +3,9 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import CurrencyConverter from './currencyConverter';
 import AddTransaction from './addTransaction';
+import TransactionList from './transactionList';
 
 const MainPage = () => {
-    const addTransaction = (description, transactionValue) => {
-        console.log('add', description, transactionValue);
-    }
     return (
         <Grid container style={styles.container} className="App">
             <Grid item xs={12}>
@@ -15,7 +13,10 @@ const MainPage = () => {
             </Grid>
             <Grid item xs={12} md={4}>
                 <CurrencyConverter style={styles.marginBottom} />
-                <AddTransaction addTransaction={addTransaction} />
+                <AddTransaction/>
+            </Grid>
+            <Grid item xs={12}>
+                <TransactionList />
             </Grid>
         </Grid>
     );

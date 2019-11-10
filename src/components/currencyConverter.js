@@ -1,16 +1,16 @@
 import React, { useState, Fragment } from 'react';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
 import CardContent from '@material-ui/core/CardContent';
 import Input from '@material-ui/core/Input';
+import { CHANGE_RATE } from '../actions/types';
 
 const CurrencyConverter = () => {
     const [value, setVaule] = useState(1);
     const [euroValue, setEuroValue] = useState('');
     const exchangeRate = useSelector(state => state.exchange.exchangeRate);
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const calculateValue = (event) => {
         const value = event.target.value;
         setVaule(value);
@@ -18,7 +18,7 @@ const CurrencyConverter = () => {
     };
     const calculateExchangeRate = (event) => {
         const exchangeRate = event.target.value;
-        dispatch({ type: 'CHANGE_RATE', data: exchangeRate })
+        dispatch({ type: CHANGE_RATE, data: exchangeRate });
         setEuroValue(exchangeRate * value);
     };
     return (
@@ -45,6 +45,6 @@ const styles = {
     container: {
         marginBottom: '40px',
     },
-}
+};
 
 export default CurrencyConverter;
