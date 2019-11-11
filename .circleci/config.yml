@@ -8,4 +8,4 @@
        - run: echo "start"
        - restore_cache:
          key: v1-dependencies-{{ checksum "package.json" }}
-         key: v1-dependencies-
+       - run: yarn install
