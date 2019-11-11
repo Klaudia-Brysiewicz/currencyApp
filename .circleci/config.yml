@@ -10,7 +10,7 @@
  #          JOBS
  # -------------------------
  jobs:
-   build:
+   fetch:
      <<: *defaults
      steps:
        - checkout
@@ -28,4 +28,13 @@
    test:
      <<: *defaults
      steps:
+       - setup_remote_docker
+       - attach_workspace:
+           at: /currencyExchange
        - run: yarn test
+ workflows:
+   version: 2
+   one_and_two:
+     jobs:
+       - fetch
+       - test
