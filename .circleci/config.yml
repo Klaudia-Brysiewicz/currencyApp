@@ -7,6 +7,5 @@
        - checkout
        - run: echo "start"
        - restore_cache:
-         keys:
-             - v1-dependencies-{{ checksum "package.json" }}
-             - v1-dependencies-
+         key: v1-dependencies-{{ checksum "package.json" }}
+         key: v1-dependencies-
