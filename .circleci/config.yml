@@ -39,8 +39,9 @@ workflows:
   version: 2
   fetch_and_test:
     jobs:
-      - fetch
+      - fetch:
+          name: Fetch
       - test:
           name: Test
           requires:
-            - fetch
+            - Fetch
