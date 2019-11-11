@@ -43,4 +43,4 @@
        - test:
          name: Test
          requires:
-            - fetch
+           - fetch
