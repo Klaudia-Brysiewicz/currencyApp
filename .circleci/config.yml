@@ -3,7 +3,7 @@ version: 2
 #      DEFAULTS VALUES
 # -------------------------
 defaults: &defaults
-  working_directory: ~/currencyExchange
+  working_directory: /currencyExchange
   docker:
     - image: circleci/node:12.9.1-browsers
 # -------------------------
@@ -33,7 +33,6 @@ jobs:
   test:
     <<: *defaults
     steps:
-      - setup_remote_docker
       - attach_workspace:
           at: /currencyExchange
       - run: yarn test
