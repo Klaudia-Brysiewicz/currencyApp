@@ -32,9 +32,15 @@
        - attach_workspace:
            at: /currencyExchange
        - run: yarn test
+ # -------------------------
+ #        WORKFLOWS
+ # -------------------------
  workflows:
    version: 2
-   one_and_two:
+   fetch_and_test:
      jobs:
        - fetch
-       - test
+       - test:
+         name: Test
+         requires:
+            - fetch
