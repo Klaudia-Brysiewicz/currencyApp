@@ -41,6 +41,6 @@
      jobs:
        - fetch
        - test:
-         name: Test
-         requires:
-           - fetch
+           name: Test
+           requires:
+             - fetch
