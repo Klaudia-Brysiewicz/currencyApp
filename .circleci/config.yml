@@ -41,5 +41,5 @@ workflows:
     jobs:
       - fetch
       - test
-          requires:
+       requires
             - fetch
