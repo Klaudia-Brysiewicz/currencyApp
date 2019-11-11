@@ -1,12 +1,20 @@
  version: 2
+ # -------------------------
+ #      DEFAULTS VALUES
+ # -------------------------
+ defaults: &defaults
+   working_directory: ~/currencyExchange
+   docker:
+     - image: circleci/node:12.9.1-browsers
+ # -------------------------
+ #          JOBS
+ # -------------------------
  jobs:
    build:
-     docker:
-       - image: circleci/node:12.9.1-browsers
-     working_directory: ~/currencyExchange
+     <<: *defaults
      steps:
        - checkout
-       - run: echo "start"
+       - run: echo "start fetch"
        - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package.json" }}
@@ -17,4 +25,7 @@
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
+   test:
+     <<: *defaults
+     steps:
        - run: yarn test
