@@ -48,6 +48,7 @@ const AddTransaction = () => {
                                 valueAfterExchange: getValueAfterExchange(exchangeRate, transactionValue),
                             },
                         });
+                        setMessage('');
                         setDescription('');
                         setTransactionValue('');
                     }}
