@@ -40,6 +40,6 @@ workflows:
   fetch_and_test:
     jobs:
       - fetch
-      - test
-       requires
+      - test:
+          requires:
             - fetch
