@@ -5,10 +5,12 @@ import Store from './store/createStore';
 
 const store = Store();
 
-export default function App() {
+const App: React.FC = () => {
     return (
         <Provider store={store}>
             <MainPage />
         </Provider>
-    )
-}
+    );
+};
+
+export default App;

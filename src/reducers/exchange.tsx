@@ -1,27 +1,27 @@
-import { CHANGE_RATE, ADD_TRANSACTION, REMOVE_TRANSACTION } from '../actions/types';
 import {
     getGreatestValueTransaction,
     getSummary,
     changeCurrency,
     getValueAfterExchange,
 } from '../utils/helpers';
+import { ExchangeState, Action, ExchangeActionTypes } from './types';
 
-const initialState = {
-    exchangeRate: 4.2,
+const initialState: ExchangeState = {
+    exchangeRate: '4.2',
     transactions: [],
     summary: 0,
     greatestTransaction: null,
 };
 
-export const exchange = (state = initialState, action = {}) => {
+export const exchange = (state = initialState, action: Action): ExchangeState => {
     switch (action.type) {
-        case CHANGE_RATE:
+        case ExchangeActionTypes.CHANGE_RATE:
             const transactionsAfterRateChange = changeCurrency(
                 state.transactions,
                 action.data,
                 getValueAfterExchange,
             );
-            const summaryAfterRateChange = getSummary(
+            const summaryAfterRateChange: number = getSummary(
                 transactionsAfterRateChange,
                 'valueAfterExchange',
             );
@@ -35,7 +35,7 @@ export const exchange = (state = initialState, action = {}) => {
                 summaryAfterExchange: summaryAfterRateChange,
                 greatestTransaction: greatestValueAfterRateChange,
             };
-        case ADD_TRANSACTION:
+        case ExchangeActionTypes.ADD_TRANSACTION:
             const updatedTransactions = [...state.transactions, action.data];
             const updatedSummary = getSummary(updatedTransactions, 'transactionValue');
             const updatedSummaryAfterExchange = getSummary(
@@ -50,7 +50,7 @@ export const exchange = (state = initialState, action = {}) => {
                 transactions: updatedTransactions,
                 greatestTransaction: updatedGreatestValue,
             };
-        case REMOVE_TRANSACTION:
+        case ExchangeActionTypes.REMOVE_TRANSACTION:
             const filtredTransactions = state.transactions.filter(el => el.id !== action.id);
             const newSummary = getSummary(filtredTransactions, 'transactionValue');
             const newSummaryAfterExchange = getSummary(filtredTransactions, 'valueAfterExchange');
