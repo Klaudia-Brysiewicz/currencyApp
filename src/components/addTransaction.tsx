@@ -10,25 +10,45 @@ const AddTransaction: React.FC = () => {
     const [message, setMessage] = useState('');
     const exchangeRate: string = useSelector((state: RootState) => state.exchange.exchangeRate);
     const dispatch = useDispatch();
-    const handleClick = () => {
+    const validateForm = () => {
         if (!description || !transactionValue) {
-            return setMessage('Proszę uzupełnić wszystkie pola');
+            setMessage('Proszę uzupełnić wszystkie pola');
+            return false;
         }
-        dispatch({
-            type: ExchangeActionTypes.ADD_TRANSACTION,
-            data: {
-                description,
-                transactionValue,
-                id: Date.now(),
-                valueAfterExchange: getValueAfterExchange(exchangeRate, transactionValue),
-            },
-        });
-        setMessage('');
-        setDescription('');
-        setTransactionValue('');
+        if(description.length < 10 ) {
+            setMessage('Opis powinien zawierać minimum 8 znaków');
+            return false;
+        }
+        return true;
+    }
+    const handleClick = () => {
+        if(validateForm()) {
+            dispatch({
+                type: ExchangeActionTypes.ADD_TRANSACTION,
+                data: {
+                    description,
+                    transactionValue,
+                    id: Date.now(),
+                    valueAfterExchange: getValueAfterExchange(exchangeRate, transactionValue),
+                },
+            });
+            setMessage('');
+            setDescription('');
+            setTransactionValue('');
+        }
     };
-    const handleDescriptionChange = (event: any) => setDescription(event.target.value);
-    const handleTransactionChange = (event: any) => setTransactionValue(event.target.value);
+    const handleDescriptionChange = (event: any) => {
+        setDescription(event.target.value);
+        setMessage('');
+    };
+    const handleTransactionChange = (event: any) => {
+        const digitOnlyRegex = /^(\d+\.?\d*|\.\d+)$/;
+        let newValue = event.target.value;
+        if(newValue.match(digitOnlyRegex)) {
+            setTransactionValue(newValue);
+            setMessage('');
+        }
+    }
     return (
         <Card style={styles.container}>
             <CardContent style={styles.content}>
@@ -36,7 +56,7 @@ const AddTransaction: React.FC = () => {
                 <Typography>Opis :</Typography>
                 <Input value={description} onChange={handleDescriptionChange} type="text" />
                 <Typography>kwota w euro :</Typography>
-                <Input value={transactionValue} onChange={handleTransactionChange} type="number" />
+                <Input value={transactionValue} onChange={handleTransactionChange} />
                 {message ? <Typography style={styles.error}>{message}</Typography> : null}
                 <Button color="primary" onClick={handleClick}>
                     Dodaj
